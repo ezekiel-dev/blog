@@ -1,7 +1,20 @@
-<%= form_for(@article) do |f| %>
-  <%@article.errors.full_messages.each do |error| %>
-    <li><%= error %></li>
+<%= form_with(model: @article, local: true) do |f| %>
+
+  <% if @article.errors.any? %>
+    <div id='error_explanation'>
+      <h2>
+        <%= pluralize(@article.errors.count, 'error')%>
+        prohibited
+          this article from being saved:
+      </h2>
+      <ul>
+        <%@article.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
+
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
@@ -14,6 +27,6 @@
     <%= f.submit %>
   </p>
   <p>
-    <%=  link_to 'cancel', articles_path %>
+    <%=  link_to 'Cancel', articles_path %>
   </p>
 <% end %>
